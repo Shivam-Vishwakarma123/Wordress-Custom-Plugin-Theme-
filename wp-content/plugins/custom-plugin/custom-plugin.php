@@ -149,7 +149,8 @@ function display_custom_contact_form_submissions()
                     $upload_dir = wp_upload_dir();
                     foreach ($submissions as $submission) {
                         $file_name = basename($submission->file_path);
-                        $file_url = esc_url($upload_dir['baseurl'] . '/' . date('Y/m') . '/' . $file_name);
+                        // $file_url = esc_url($upload_dir['baseurl'] . '/' . date('Y/m') . '/' . $file_name);
+                        $file_url = esc_url($upload_dir['baseurl'] . '/' . $upload_dir['subdir'] . '/' . $file_name);
                     ?>
                         <tr>
                             <td><?php echo $submission->id; ?></td>
