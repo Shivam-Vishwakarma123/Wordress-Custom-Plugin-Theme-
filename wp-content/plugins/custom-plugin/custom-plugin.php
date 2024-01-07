@@ -3,7 +3,7 @@
 Plugin Name: Custom Contact Form Plugin
 Description: A custom contact form for your website.
 Version: 1.0
-Author: Your Name
+Author: Shivam Vishwakarma
 */
 
 
@@ -71,11 +71,12 @@ function handle_contact_form_submission()
 
         // Handle file upload
         $upload_dir = wp_upload_dir();
+        // print_r($upload_dir);
         $file_upload = $_FILES['file_upload'];
 
         $file_name = sanitize_file_name($file_upload['name']);
         $file_path = $upload_dir['path'] . '/' . $file_name;
-        echo $file_path;
+        // echo $file_path;
 
         if (move_uploaded_file($file_upload['tmp_name'], $file_path)) {
 
@@ -93,6 +94,13 @@ function handle_contact_form_submission()
             // File upload failed
             echo 'File upload failed.';
         }
+
+        $to = $email;
+        $subject = 'Mail From Brevo Setup';
+        $message = 'Email send from : '.$name.'Sir';
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        wp_mail($to, $subject, $message, $headers);
     }
 }
 
@@ -149,8 +157,8 @@ function display_custom_contact_form_submissions()
                     $upload_dir = wp_upload_dir();
                     foreach ($submissions as $submission) {
                         $file_name = basename($submission->file_path);
-                        // $file_url = esc_url($upload_dir['baseurl'] . '/' . date('Y/m') . '/' . $file_name);
                         $file_url = esc_url($upload_dir['baseurl'] . '/' . $upload_dir['subdir'] . '/' . $file_name);
+                        // print_r($file_url);
                     ?>
                         <tr>
                             <td><?php echo $submission->id; ?></td>
